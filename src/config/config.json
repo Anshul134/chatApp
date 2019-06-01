@@ -1,0 +1,4 @@
+{
+	"JWT_SECRET" : "ans123@!",
+	"DB_URL" : "mongodb://ans13158:Anshul%4013158@ds231207.mlab.com:31207/chatapp"
+}
