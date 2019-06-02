@@ -15,7 +15,6 @@ const userRouteData = require('../appDataObj').user_routes;
 //Contains functions for user related server tasks like login, register, etc.
 const userController = require('../server-controller/user');
 
-
 /*| @Route /user/login
 	| @Method POST
 	| @Desc Login user 
@@ -30,7 +29,8 @@ router.post(userRouteData.LOGIN, (req, res) => {
  							 		res.send(results);
  							  }).catch( (err) => {
  							 		res.send(err);
- 							  })
+ 							  });
+
 });
 
 

@@ -1,8 +1,45 @@
 const express = require('express');
 const router = express.Router();
 
-router.get('/', (req, res, next) => {
-	res.send("In /chats/");
+//Middleware to check authorization
+const checkAuth = require('../middlewares/check-auth');
+
+const userController = require('../server-controller/user');
+const chatController = require('../server-controller/chat');
+
+const chatRouteData = require('../appDataObj').chat_routes;
+
+
+/*| @Route /chats/
+	| @Method GET
+	| @Desc Fetch a list of all loggedin users 
+	| @Inputs Inputs: JWT token 
+	| @Ouptut Response : Object containing details of all loggedIn users
+	| @Access Protected
+*/
+router.post(chatRouteData.CHAT_HOME, checkAuth, (req, res, next) => {
+	console.log("in /")
+	const {userName} = req.body; 
+	//Open socket
+	chatController.openSocket(userName)
+	//Fetch List of online users
+	chatController.fetchOnlineUsers()
+				  .then( (results) => {		  	
+				  }).catch( (err) => {
+				  	 res.send(err);	
+				  })	
+	
 });
+
+router.post(chatRouteData.CHAT_ROOM, checkAuth, (req, res) => {
+	let {myName, otherName} = req.body;	
+	console.log("in /chatRoom")
+	chatController.openRoom({myName, otherName})
+				  .then( (result) => {
+				  	res.send(result)
+				  }).catch( (err) => {
+				  	res.send(err);
+				  })
+})
 
 module.exports = router;

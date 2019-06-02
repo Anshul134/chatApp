@@ -3,6 +3,11 @@ module.exports.user_routes = {
 	REGISTER : '/register',
 	UNIQUE_MAIL : '/checkMail',
 	UNIQUE_NAME : '/checkName',
+};
+
+module.exports.chat_routes = {
+	CHAT_HOME : '/',
+	CHAT_ROOM : '/chatRoom'
 }
 
 module.exports.message = {
