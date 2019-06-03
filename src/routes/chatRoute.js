@@ -21,7 +21,8 @@ router.post(chatRouteData.CHAT_HOME, checkAuth, (req, res, next) => {
 	console.log("in /")
 	const {userName} = req.body; 
 	//Open socket
-	chatController.openSocket(userName)
+	socket
+
 	//Fetch List of online users
 	chatController.fetchOnlineUsers()
 				  .then( (results) => {		  	

@@ -6,6 +6,7 @@ const Users = require('../db/models/userModel');
 const loggedInUser = require('../db/models/loggedInModel');
 
 const UserUtils = require('../db/dbUtils/userUtils');
+const chatUtils = require('../db/dbUtils/chatUtils');
 
 const CONFIG = require('../config/config');
 
@@ -36,7 +37,7 @@ const users = {
 																 | Else insert into collection
 			 								  			*/
 			 								  			console.log("Username>>>>", data.userName);
-			 								  			UserUtils.checkLoggedIn({userName : data.userName})
+			 								  			chatUtils.checkLoggedIn({userName : data.userName})
 			 								  							 .then( (result) => {
 			 								  							 		if(result) {
 			 								  							 			resolve({status:200, token});

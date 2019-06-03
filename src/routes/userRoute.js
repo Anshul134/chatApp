@@ -6,6 +6,7 @@ const jwt = require('jsonwebtoken');
 
 const Users = require('../db/models/userModel');
 const UserUtils = require('../db/dbUtils/userUtils');
+const chatUtils = require('../db/dbUtils/chatUtils');
 
 const CONFIG = require('../config/config');
 

@@ -4,8 +4,8 @@ const app = express();
 const hbs = require('express-handlebars');
 
 const path = require('path');
-
-const socket = require('socket.io');
+var server=require('http').createServer(app);
+const io = require('socket.io').listen(server);
 
 //USING .env file for enviroment variables
 require('dotenv').config();
@@ -23,18 +23,35 @@ app.engine( 'handlebars', hbs({
 
 const userRoute = require('./src/routes/userRoute');
 const chatRoute = require('./src/routes/chatRoute');
-
+const appRoutes = require('./src/routes/appRoutes');
 const PORT = process.env.PORT;
+
 
 const db = require('./src/db/config.js');
 
 app.use(express.json());
 app.use(express.urlencoded({extended:false}) );
 
-app.use('/user', userRoute);
+app.use('/users', userRoute);
 app.use('/chats', chatRoute);
+app.use('/', appRoutes);
 
-const server = app.listen(PORT, () => {
+server.listen(PORT, () => {
 	console.log(`Listening to ${PORT}`);
 });
+
+const socketConn = [];
+
+io.sockets.on('connection', (socket) => {
+	socketConn.push(socket);
+	console.log("connected", socket.length);
+	
+
+	socket.on('disconnect', () => {
+
+		console.log("Disconnected")
+	})
+});
+
+
 

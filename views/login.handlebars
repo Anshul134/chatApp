@@ -1,0 +1,31 @@
+{{> navbar}}
+
+
+	<div class="row" style="width:90%;margin-left:5%">
+		<div class="col-md-12">
+			<h2>Login Form</h2>
+
+			<form action="/users/login" method="POST">
+			  <div class="imgcontainer">
+			    <img src="/assets/img/img_avatar2.png" alt="Avatar" class="avatar">
+			  </div>
+
+			  <div class="container">
+			    <label for="uname"><b>Username or Email</b></label>
+			    <input type="text" placeholder="Enter Username or Email" name="mailOrName" required>
+
+			    <label for="psw"><b>Password</b></label>
+			    <input type="password" placeholder="Enter Password" name="password" required>
+			        
+			    <button type="submit">Login</button>
+			    
+			  </div>
+
+			  <div class="container" style="background-color:#f1f1f1">
+			    <button type="button" class="cancelbtn">Cancel</button>
+			    <span class="psw">Forgot <a href="#">password?</a></span>
+			  </div>
+			</form>
+		</div>	
+	</div>	
+
