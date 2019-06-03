@@ -1,19 +1,12 @@
 {{>navbar}}
 
-<input type="hidden" name="myUserName" id="myName" value={{this.userName}}>
-
+<input type="hidden" name="myUserName" id="userName" value={{this.userName}}>
+<input type="hidden" name="fullName" id="fullName" value="{{this.name}}">
 <div class="container chat-wrap" style="display: none">
 	<div class="rows">
 		<div class="chat-name-wrap">
 			<h3 class="text-center chat-head">Online Users</h3>
-			{{#each results}}
-					<div class="cards">
-						<div class="names">
-							<h4>@{{this.userName}}</h4>
-							<p><b>{{this.fName}} {{this.lName}}</b></p>
-						</div>
-					</div>
-			{{/each}}		
+			
 		</div>	
 	</div>
 </div>

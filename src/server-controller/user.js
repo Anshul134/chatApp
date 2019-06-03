@@ -41,12 +41,13 @@ const users = {
 			 								  			chatUtils.checkLoggedIn({userName : data.userName})
 			 								  							 .then( (result) => {
 			 								  							 		if(result) {
-					 								  							 		resolve({status:200, token:token, userName: data.userName});
+			 								  							 			console.log("name :>>>>>>>>>> ",`${data.fName} + ${data.lName}`)
+					 								  							 		resolve({status:200, token:token, userName: data.userName, name : `${data.fName} ` + `${data.lName}`});
 			 								  							 			
 			 								  							 		} else {
 			 								  							 			UserUtils.insertLogIn({userName : data.userName})
 										 								  							 .then( (result) => { //.then #3
-										 								  							 		resolve({status:200, token:token, userName: data.userName});
+										 								  							 		resolve({status:200, token:token, userName: data.userName, name : `${data.fName} ` + `${data.lName}`});
 										 								  							 }).catch( (err) => { // catch block for .then#3
 										 								  							 		console.log("error in #3", err);
 										 								  							 		reject({status:500, message: MESSAGES.SOMETHING_WRONG});
@@ -114,12 +115,12 @@ const users = {
 			 								  			chatUtils.checkLoggedIn({userName : userName})
 			 								  							 .then( (result) => {
 			 								  							 		if(result) {
-					 								  							 		resolve({status:200, token:token, userName: userName});
+					 								  							 		resolve({status:200, token:token, userName: userName, name : `${fName} ` + `${lName}`});
 			 								  							 			
 			 								  							 		} else {
 			 								  							 			UserUtils.insertLogIn({userName : userName})
 										 								  							 .then( (result) => { //.then #3
-										 								  							 		resolve({status:200, token:token, userName: data.userName});
+										 								  							 		resolve({status:200, token:token, userName: data.userName, name : `${fName} ` + `${lName}`});
 										 								  							 }).catch( (err) => { // catch block for .then#3
 										 								  							 		console.log("error in #3", err);
 										 								  							 		reject({status:500, message: MESSAGES.SOMETHING_WRONG});

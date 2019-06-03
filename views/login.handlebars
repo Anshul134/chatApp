@@ -8,6 +8,7 @@
 			<form action="/chats/" method="POST" id="chatRedirectForm">
 				<input type="hidden" id="token" name="token" {{#if results.token}} value="{{results.token}}" {{/if}} />
 				<input type="hidden" name="userName" id="userName" {{#if results.userName}} value="{{results.userName}}" {{/if}}>
+				<input type="hidden" name="name" id="name" {{#if results.name}} value="{{results.name}}" {{/if}}>
 			</form>
 			
 			<form action="/users/login" method="POST">

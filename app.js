@@ -42,7 +42,7 @@ server.listen(PORT, () => {
 });
 
 let socketConn = [];
-
+let users = [];
 io.sockets.on('connection', (socket) => {
 	socketConn.push(socket);
 
@@ -50,12 +50,16 @@ io.sockets.on('connection', (socket) => {
 	
 	socket.on('user authed', (data, callback) => {
 		callback(true);
+		console.log("data>>>.",data);
 		socket.userName = data.userName;
+		socket.fullName = data.fullName
 		let socketList = socketConn.filter( (socketConn) => {
 			socketConn.id !== socket.id;
 		});
 		socketConn = socketList;
 		socketConn.push( socket );
+		users.push({userName : data.userName, fullName : data.fullName});
+		updateUserName();
 	})
 
 	socket.on('disconnect', () => {
@@ -66,6 +70,10 @@ io.sockets.on('connection', (socket) => {
 		console.log("Disconnected")
 	});
 
+	function updateUserName() {
+		console.log("users>>>>>>",users)
+		io.sockets.emit('get usernames', users);
+	}
 	
 });
 
