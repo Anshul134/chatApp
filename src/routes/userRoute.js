@@ -27,10 +27,16 @@ router.post(userRouteData.LOGIN, (req, res) => {
 	const {mailOrName, password} = req.body;
  	userController.userLogin(mailOrName, password)
  							  .then( (results) => {
- 							 		res.send(results);
- 							  }).catch( (err) => {
- 							 		res.send(err);
- 							  });
+								 		console.log("results>>>>>>>",results)
+									if(results.status === 200) {
+										res.render('login',{results});
+									}
+									else {
+										res.render('login', {results});
+									}
+								}).catch( (err) => {
+									res.render('login', {err});
+								})
 
 });
 
@@ -44,7 +50,7 @@ router.post(userRouteData.LOGIN, (req, res) => {
 */
 router.post(userRouteData.UNIQUE_MAIL, (req, res) => {
 	const {email} = req.body;
-	userController.checkMailOrName(email)
+	userController.checkMail(email)
 								.then( (results) => {
 									res.send(results);
 								}).catch( (err) => {
@@ -62,10 +68,12 @@ router.post(userRouteData.UNIQUE_MAIL, (req, res) => {
 */
 router.post(userRouteData.UNIQUE_NAME, (req, res) => {
 	const {userName} = req.body;
-	userController.checkMailOrName(userName)
+	userController.checkName(userName)
 								.then( (results) => {
+									console.log(results);
 									res.send(results);
 								}).catch( (err) => {
+									console.log(err);
 									res.send(err);
 								})
 });
@@ -82,10 +90,17 @@ router.post(userRouteData.REGISTER, (req, res) => {
 	const {email, password, userName, fName, lName} = req.body;
 	userController.userRegister({email, password, userName, fName, lName})
 								.then( (results) => {
-									res.send(results);
+									console.log("THEN>>>>>", results)
+									if(results.status === 200) {
+										res.render('register',{results});
+									}
+									else {
+										res.render('register', {results});
+									}
 								}).catch( (err) => {
-									res.send(err);
+									res.render('register', {err});
 								})
+
 });
 
 

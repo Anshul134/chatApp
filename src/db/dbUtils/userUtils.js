@@ -58,5 +58,33 @@ module.exports = {
 			 		reject(err);
 			 	})
 		})
-	}
+	},
+	findMail : (body) => {
+		return new Promise( (resolve, reject) => {
+			Users.find({email : body})
+				 .then( (res) => {
+					if(res.length) {
+						resolve(res);
+					} else {
+						resolve(res);
+					}
+				}).catch( (err) => {
+					reject(err);
+				})
+		});
+	},
+	findName : (body) => {
+		return new Promise( (resolve, reject) => {
+			Users.find({userName : body})
+				 .then( (res) => {
+					if(res.length) {
+						resolve(res);
+					} else {
+						resolve(res);
+					}
+				}).catch( (err) => {
+					reject(err);
+				})
+		});
+	},
 }

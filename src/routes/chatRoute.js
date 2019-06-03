@@ -18,14 +18,13 @@ const chatRouteData = require('../appDataObj').chat_routes;
 	| @Access Protected
 */
 router.post(chatRouteData.CHAT_HOME, checkAuth, (req, res, next) => {
-	console.log("in /")
-	const {userName} = req.body; 
-	//Open socket
-	socket
-
+	console.log("in chats/")
+	const {userName}= req.body;
 	//Fetch List of online users
 	chatController.fetchOnlineUsers()
-				  .then( (results) => {		  	
+				  .then( (results) => {
+				  	console.log(results);	
+				  	res.render('chatHome',{results, userName});	  	
 				  }).catch( (err) => {
 				  	 res.send(err);	
 				  })	

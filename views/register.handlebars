@@ -1,59 +1,66 @@
 {{> navbar}}
 
+<form action="/chats/" method="POST" id="chatRedirectForm">
+				<input type="hidden" id="token" name="token" {{#if results.token}} value="{{results.token}}" {{/if}} />
+				<input type="hidden" name="userName" class="userName" {{#if results.userName}} value="{{results.userName}}" {{/if}}>
+</form>
 
 	<div class="row" style="width:90%;margin-left:5%;margin-bottom: 5%">
 		<div class="col-md-12">
-			<h2>Registration Form</h2>
+			<div class="overlay"></div>
+				<h2>Registration Form</h2>
 
-			<form action="/users/register" method="POST" class="form">
-			  <div class="imgcontainer">
-			    <img src="/assets/img/img_avatar2.png" alt="Avatar" class="avatar">
-			  </div>
-
-			  <div class="container">
-			  	<div class="form-group">
-				    <label for="uname"><b>Email</b></label>
-				    <input type="email" class="form-control" placeholder="EnterEmail" name="email" required id="email" onBlur="checkEmail()">
-				  </div>  
-
-				  <div class="email-error">
-				  	
+				<form action="/users/register" method="POST" class="form">
+				  <div class="imgcontainer">
+				    <img src="/assets/img/img_avatar2.png" alt="Avatar" class="avatar">
 				  </div>
+				  {{#if results.message}}
+						<div class="login-error alert alert-danger text-center">{{results.message}}</div>
+					{{/if}}
+				  <div class="container">
+				  	<div class="form-group">
+					    <label for="uname"><b>Email</b></label>
+					    <input type="email" class="form-control" placeholder="EnterEmail" name="email" required id="email" onBlur="checkEmail()">
+					  </div>  
 
-				  <div class="form-group">
-				    <label for="uname"><b>User Name</b></label>
-				    <input type="text" class="form-control" placeholder="Enter Username" name="userName" id="userName" required onBlur="checkUserName()">
-				  </div> 
-				  <div class="userName-error">
-				  	
+					  <div class="email-error">
+					  	
+					  </div>
+
+					  <div class="form-group">
+					    <label for="uname"><b>User Name</b></label>
+					    <input type="text" class="form-control" placeholder="Enter Username" name="userName" id="userName" required onBlur="checkUserName()">
+					  </div> 
+					  <div class="userName-error">
+					  	
+					  </div>
+	 
+
+					  <div class="form-group">
+					    <label for="uname"><b>First Name</b></label>
+					    <input type="text" class="form-control" placeholder="Enter First Name" name="fName" required>
+					  </div>  
+
+					  <div class="form-group">
+					    <label for="uname"><b>Last Name</b></label>
+					    <input type="text" class="form-control" placeholder="Enter Last Name" name="lName" required>
+					  </div>  
+
+					  <div class="form-group">
+					    <label for="psw"><b>Password</b></label>
+					    <input type="password" class="form-control" placeholder="Enter Password" name="password" id="password" required>
+					  </div>
+
+					  <div class="form-group">
+					    <label for="psw"><b>Confirm Password</b></label>
+					    <input type="password" class="form-control" placeholder="Re-enter Password" id="rePassword" name="confPassword" required>
+					  </div>
+
+					  <div class="form-group">
+				    	<button type="submit" class="form-control btn-primary" id="registerBtn" disabled>Login</button>
+				    </div> 
 				  </div>
- 
-
-				  <div class="form-group">
-				    <label for="uname"><b>First Name</b></label>
-				    <input type="text" class="form-control" placeholder="Enter First Name" name="fName" required>
-				  </div>  
-
-				  <div class="form-group">
-				    <label for="uname"><b>Last Name</b></label>
-				    <input type="text" class="form-control" placeholder="Enter Last Name" name="lName" required>
-				  </div>  
-
-				  <div class="form-group">
-				    <label for="psw"><b>Password</b></label>
-				    <input type="password" class="form-control" placeholder="Enter Password" name="password" id="password" required>
-				  </div>
-
-				  <div class="form-group">
-				    <label for="psw"><b>Confirm Password</b></label>
-				    <input type="password" class="form-control" placeholder="Re-enter Password" id="rePassword" name="confPassword" required>
-				  </div>
-
-				  <div class="form-group">
-			    	<button type="submit" class="form-control btn-primary" >Login</button>
-			    </div> 
-			  </div>
-			</form>
+				</form>	
 		</div>	
 	</div>	
 

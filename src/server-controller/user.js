@@ -21,6 +21,7 @@ const users = {
 		 					 .then( (user) => {   //.then #1
 			 						if(!user || user.length === 0) {
 			 							resolve({status:400, message : MESSAGES.USER_NOT_FOUND});
+			 							return;
 		 							}
 			 						const data = user[0];
 			 						bcrypt.compare(password, data.password)
@@ -40,11 +41,12 @@ const users = {
 			 								  			chatUtils.checkLoggedIn({userName : data.userName})
 			 								  							 .then( (result) => {
 			 								  							 		if(result) {
-			 								  							 			resolve({status:200, token});
+					 								  							 		resolve({status:200, token:token, userName: data.userName});
+			 								  							 			
 			 								  							 		} else {
 			 								  							 			UserUtils.insertLogIn({userName : data.userName})
 										 								  							 .then( (result) => { //.then #3
-										 								  							 		resolve({status:200, token});
+										 								  							 		resolve({status:200, token:token, userName: data.userName});
 										 								  							 }).catch( (err) => { // catch block for .then#3
 										 								  							 		console.log("error in #3", err);
 										 								  							 		reject({status:500, message: MESSAGES.SOMETHING_WRONG});
@@ -60,6 +62,7 @@ const users = {
 			 								  	reject({status:500, message: MESSAGES.SOMETHING_WRONG});
 			 								  });
 			 					}).catch( (err) => { 	//catch block for .then #1
+			 						console.log("err", err);
 			 						reject({err});
 			 					});
 	 		});
@@ -68,9 +71,9 @@ const users = {
 		return new Promise( (resolve, reject) => {
 			 UserUtils.findMailorName(data)
 			 			.then( (result) => { 	//.then #4
-			 					if(!result || result.length === 0) {	//Woud mean that data is unique
+			 					if(!result || result.length === 0) {	//Would mean that data is unique
 			 						resolve({status:200, emailExist : true})
-			 					} else {															//Woud mean that data is not unique
+			 					} else {															//Would mean that data is not unique
 			 						resolve({status:400, emailExist : false});
 			 					}
 			 			}).catch( (err) => {	//catch block for .then #4
@@ -102,7 +105,28 @@ const users = {
 												 				userName : body.userName,
 												 				userEmail : body.email,
 												 			}, CONFIG.JWT_SECRET);
-												 			resolve({status:200, token});
+												 			//Make entry of this user in loggedIn users' collection
+			 								  			/* | Check if user already present in logedIn 
+																 | If yes, return
+																 | Else insert into collection
+			 								  			*/
+			 								  			console.log("Username>>>>", data.userName);
+			 								  			chatUtils.checkLoggedIn({userName : userName})
+			 								  							 .then( (result) => {
+			 								  							 		if(result) {
+					 								  							 		resolve({status:200, token:token, userName: userName});
+			 								  							 			
+			 								  							 		} else {
+			 								  							 			UserUtils.insertLogIn({userName : userName})
+										 								  							 .then( (result) => { //.then #3
+										 								  							 		resolve({status:200, token:token, userName: data.userName});
+										 								  							 }).catch( (err) => { // catch block for .then#3
+										 								  							 		console.log("error in #3", err);
+										 								  							 		reject({status:500, message: MESSAGES.SOMETHING_WRONG});
+										 								  							 });
+			 								  							 		}
+			 								  							 })	
+												 			
 												 		}
 												 		
 												 }).catch( (err) => { 		//catch block for .then #6
@@ -113,6 +137,37 @@ const users = {
 					  	reject({status:500, message: MESSAGES.SOMETHING_WRONG});
 					  })
 			
+		});
+	},
+	checkMail : (data) => {		//data is either email or userName depending.
+		return new Promise( (resolve, reject) => {
+			 UserUtils.findMail(data)
+			 			.then( (result) => { 	//.then #4
+			 					console.log(result)
+			 					if(!result || result.length === 0) {	//Would mean that data is unique
+			 						resolve({status:200, userExist : false})
+			 					} else {															//Would mean that data is not unique
+			 						resolve({status:400, userExist : true});
+			 					}
+			 			}).catch( (err) => {	//catch block for .then #4
+			 					console.log("error", err);
+			 					reject({status : 500, message : MESSAGES.SOMETHING_WRONG})
+			 			})
+		});
+	},
+	checkName : (data) => {		//data is either email or userName depending.
+		return new Promise( (resolve, reject) => {
+			 UserUtils.findName(data)
+			 			.then( (result) => { 	//.then #4
+			 					if(!result || result.length === 0) {	//Would mean that data is unique
+			 						resolve({status:200, userExist : false})
+			 					} else {															//Would mean that data is not unique
+			 						resolve({status:400, userExist : true});
+			 					}
+			 			}).catch( (err) => {	//catch block for .then #4
+			 					console.log("error", err);
+			 					reject({status : 500, message : MESSAGES.SOMETHING_WRONG})
+			 			})
 		});
 	},
 	

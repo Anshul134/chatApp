@@ -17,7 +17,8 @@ app.engine( 'handlebars', hbs({
   extname: 'handlebars',
   defaultView: 'default',
   layoutsDir: __dirname + '/views/layouts/',
-  partialsDir: __dirname + '/views/partials/'
+  partialsDir: __dirname + '/views/partials/',
+  helper : __dirname + '/src/client-controller/utils'
 }));
 
 
@@ -40,17 +41,32 @@ server.listen(PORT, () => {
 	console.log(`Listening to ${PORT}`);
 });
 
-const socketConn = [];
+let socketConn = [];
 
 io.sockets.on('connection', (socket) => {
 	socketConn.push(socket);
-	console.log("connected", socket.length);
+
+	console.log("connected", socketConn.length, socket.id);
 	
+	socket.on('user authed', (data, callback) => {
+		callback(true);
+		socket.userName = data.userName;
+		let socketList = socketConn.filter( (socketConn) => {
+			socketConn.id !== socket.id;
+		});
+		socketConn = socketList;
+		socketConn.push( socket );
+	})
 
 	socket.on('disconnect', () => {
-
+		let socketList = socketConn.filter( (socketConn) => {
+			socketConn.id !== socket.id;
+		});
+		socketConn = socketList;
 		console.log("Disconnected")
-	})
+	});
+
+	
 });
 
 

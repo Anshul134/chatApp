@@ -5,11 +5,18 @@
 		<div class="col-md-12">
 			<h2>Login Form</h2>
 
+			<form action="/chats/" method="POST" id="chatRedirectForm">
+				<input type="hidden" id="token" name="token" {{#if results.token}} value="{{results.token}}" {{/if}} />
+				<input type="hidden" name="userName" id="userName" {{#if results.userName}} value="{{results.userName}}" {{/if}}>
+			</form>
+			
 			<form action="/users/login" method="POST">
 			  <div class="imgcontainer">
 			    <img src="/assets/img/img_avatar2.png" alt="Avatar" class="avatar">
 			  </div>
-
+			  {{#if results.message}}
+						<div class="login-error alert alert-danger text-center">{{results.message}}</div>
+				{{/if}}
 			  <div class="container">
 			    <label for="uname"><b>Username or Email</b></label>
 			    <input type="text" placeholder="Enter Username or Email" name="mailOrName" required>
@@ -29,3 +36,4 @@
 		</div>	
 	</div>	
 
+<script src="/assets/js/main.js"></script>
