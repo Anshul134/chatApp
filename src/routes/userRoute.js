@@ -26,16 +26,16 @@ const userController = require('../server-controller/user');
 router.post(userRouteData.LOGIN, (req, res) => {
 	const {mailOrName, password} = req.body;
  	userController.userLogin(mailOrName, password)
- 							  .then( (results) => {
-								 		console.log("results>>>>>>>",results)
-									if(results.status === 200) {
-										res.render('login',{results});
+ 							  .then( (loginResults) => {
+									if(loginResults.status === 200) {
+										console.log(loginResults);
+										res.send({loginResults});
 									}
 									else {
-										res.render('login', {results});
+										res.send( {loginResults});
 									}
 								}).catch( (err) => {
-									res.render('login', {err});
+									res.send( {err});
 								})
 
 });
@@ -90,15 +90,15 @@ router.post(userRouteData.REGISTER, (req, res) => {
 	const {email, password, userName, fName, lName} = req.body;
 	userController.userRegister({email, password, userName, fName, lName})
 								.then( (results) => {
-									console.log("THEN>>>>>", results)
+									
 									if(results.status === 200) {
-										res.render('register',{results});
+										res.render('index',{results});
 									}
 									else {
-										res.render('register', {results});
+										res.render('index', {results});
 									}
 								}).catch( (err) => {
-									res.render('register', {err});
+									res.render('index', {err});
 								})
 
 });

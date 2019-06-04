@@ -3,12 +3,123 @@
 <div class="container">
 	<div class="row">
 		<div class="col-md-12">
-			<h2 class="text-center">Chat App</h2>
-				<br><br>
-			<h3 class="text-danger">Chat feature is not available without login.</h3>
-			<a href="http://localhost:3000/login">Click here to login</a>
-				<br>
-			<a href="http://localhost:3000/register">Click here to Register</a>
+			<h2 class="page-head text-center">Chat App</h2>
+				
+			<div class="chat-head" style="display: none">
+				<div class="online-users col-md-4">
+					<h3>Online Users</h3>
+					<ul class="online-users"></ul>
+				</div>
+				<div class="chat-form col-md-8">
+					<div class="chat-form-wrap">
+						<div class="message-area">
+							
+						</div>
+						<div class="messageDiv" style="display: none">
+							<form class="messageForm">
+								<input type="text" name="message" id="message"/>
+								<input type="submit" name="submit" value="Send">
+							</form>
+						</div>	
+					</div>
+				</div>	
+			</div>	
+			<ul class="nav nav-tabs col-md-12">
+			    <li class="active" style="width: 50%;" ><a data-toggle="tab" href="#home" >Login</a></li>
+			    <li style="width: 50%"><a data-toggle="tab" href="#menu1">Register</a></li>
+			    
+			</ul>
+			<div class="tab-content">
+			    <div id="home" class="tab-pane fade in active text-center">
+
+			      	<form  class="col-md-offset-3 col-md-7 form" id="loginForm">
+			  			<br>
+			  {{#if loginResults.message}}
+						<div class="login-error alert alert-danger text-center">{{loginResults.message}}</div>
+				{{/if}}
+			  <div class="form-group">
+			    <label for="uname"><b>Username or Email</b></label>
+			    <input type="text" placeholder="Enter Username or Email" name="mailOrName" required id='mailOrName' class="form-control">
+			  </div>
+			  <div class="form-group">  
+			    <label for="psw"><b>Password</b></label>
+			    <input type="password" placeholder="Enter Password" name="password" required id='loginPassword' class="form-control">
+			  </div>
+			  <div class="form-group">
+			    <button type="submit" class="form-control">Login</button>
+			  </div>  
+			 
+
+			  
+			</form>
+			    </div>
+			    <div id="menu1" class="tab-pane fade">
+			      	<form action="/users/register" method="POST" class="form col-md-offset-2 col-md-5" id="registerForm">
+
+				  <div class="imgcontainer">
+				    <img src="/assets/img/img_avatar2.png" alt="Avatar" class="avatar">
+				  </div>
+				  {{#if results.message}}
+						<div class="login-error alert alert-danger text-center">{{results.message}}</div>
+					{{/if}}
+				  <div class="">
+				  	<div class="form-group">
+					    <label for="uname"><b>Email</b></label>
+					    <input type="email" class="form-control" placeholder="EnterEmail" name="email" required id="email" onBlur="checkEmail()">
+					  </div>  
+
+					  <div class="email-error">
+					  	
+					  </div>
+
+					  <div class="form-group">
+					    <label for="uname"><b>User Name</b></label>
+					    <input type="text" class="form-control" placeholder="Enter Username" name="userName" id="userName" required onBlur="checkUserName()">
+					  </div> 
+					  <div class="userName-error">
+					  	
+					  </div>
+	 
+
+					  <div class="form-group">
+					    <label for="uname"><b>First Name</b></label>
+					    <input type="text" class="form-control" placeholder="Enter First Name" name="fName" required>
+					  </div>  
+
+					  <div class="form-group">
+					    <label for="uname"><b>Last Name</b></label>
+					    <input type="text" class="form-control" placeholder="Enter Last Name" name="lName" required>
+					  </div>  
+
+					  <div class="form-group">
+					    <label for="psw"><b>Password</b></label>
+					    <input type="password" class="form-control" placeholder="Enter Password" name="password" id="password" required>
+					  </div>
+
+					  <div class="form-group">
+					    <label for="psw"><b>Confirm Password</b></label>
+					    <input type="password" class="form-control" placeholder="Re-enter Password" id="rePassword" name="confPassword" required>
+					  </div>
+
+					  <div class="form-group">
+				    	<button type="submit" class="form-control btn-primary" id="registerBtn" disabled>Register</button>
+				    </div> 
+				  </div>
+				</form>	
+			    </div>
+    		</div>
+			
+			<form action="/chats/" method="POST" id="chatRedirectForm" >
+				<input type="hidden" id="token" name="token"  />
+				<input type="hidden" name="userName" id="userNameHidden" >
+				<input type="hidden" name="name" id="nameHidden" >
+			</form>
+			
+			
+
+			
+
+				
 		</div>
 	</div>
 </div>

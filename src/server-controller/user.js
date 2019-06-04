@@ -37,11 +37,9 @@ const users = {
 																 | If yes, return
 																 | Else insert into collection
 			 								  			*/
-			 								  			console.log("Username>>>>", data.userName);
 			 								  			chatUtils.checkLoggedIn({userName : data.userName})
 			 								  							 .then( (result) => {
 			 								  							 		if(result) {
-			 								  							 			console.log("name :>>>>>>>>>> ",`${data.fName} + ${data.lName}`)
 					 								  							 		resolve({status:200, token:token, userName: data.userName, name : `${data.fName} ` + `${data.lName}`});
 			 								  							 			
 			 								  							 		} else {

@@ -1,12 +1,12 @@
 {{>navbar}}
-
+<input type="hidden" name="pageVisits" id="pageVisits" value="0"/>
 <input type="hidden" name="myUserName" id="userName" value={{this.userName}}>
 <input type="hidden" name="fullName" id="fullName" value="{{this.name}}">
 <div class="container chat-wrap" style="display: none">
 	<div class="rows">
 		<div class="chat-name-wrap">
 			<h3 class="text-center chat-head">Online Users</h3>
-			
+			<ul class="online-users"></ul>
 		</div>	
 	</div>
 </div>

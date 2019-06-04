@@ -41,41 +41,51 @@ server.listen(PORT, () => {
 	console.log(`Listening to ${PORT}`);
 });
 
-let socketConn = [];
 let users = [];
+let connections = [];
+
 io.sockets.on('connection', (socket) => {
-	socketConn.push(socket);
+	connections.push(socket);
+	console.log("connected ", connections.length, " sockets");
 
-	console.log("connected", socketConn.length, socket.id);
-	
-	socket.on('user authed', (data, callback) => {
-		callback(true);
-		console.log("data>>>.",data);
-		socket.userName = data.userName;
-		socket.fullName = data.fullName
-		let socketList = socketConn.filter( (socketConn) => {
-			socketConn.id !== socket.id;
-		});
-		socketConn = socketList;
-		socketConn.push( socket );
-		users.push({userName : data.userName, fullName : data.fullName});
-		updateUserName();
-	})
-
-	socket.on('disconnect', () => {
-		let socketList = socketConn.filter( (socketConn) => {
-			socketConn.id !== socket.id;
-		});
-		socketConn = socketList;
-		console.log("Disconnected")
+	socket.on('disconnect', (data) => {
+		console.log("socket username:::::::", socket.userName)
+		users.splice( users.indexOf(socket.userName), 1);
+		updateUserNames();
+		connections.splice( connections.indexOf(socket), 1);
+		console.log("Disconnected ", connections.length, " sockets still connected");		
 	});
 
-	function updateUserName() {
-		console.log("users>>>>>>",users)
+	socket.on('send message', (data) => {
+		io.sockets.emit('send message', {msg: data});
+	});
+
+	socket.on('new user', (data, callback) => {
+		console.log("new user>>>>",data)
+		callback({status:true, pageVisits : parseInt(data.pageVisits)+1});
+		socket.userName = data.userName;
+		users.push(socket.userName);
+		updateUserNames();
+	});
+
+	socket.on('get users', (callback) => {
+		console.log("::::::FETCH USER::::");
+		callback();
+		updateUserNames();
+	})
+
+	const updateUserNames = () => {
+		console.log("IN HERE::::::::", users);
 		io.sockets.emit('get usernames', users);
 	}
-	
-});
 
+	socket.on('new message', (data) => {
+		console.log("DATA::::",data);
+		io.sockets.emit('send message', data);
+	});
+
+
+
+});
 
 

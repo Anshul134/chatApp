@@ -1,36 +1,25 @@
-$(document).ready( () => {
+//$(document).ready( () => {
 	const socket = io.connect('http://localhost:3000');
 
-	const myName = $('#userName').val();
-	const fullName = $('#fullName').val();
-	
-	socket.emit('user authed', {userName : myName, fullName: fullName}, (data) => {
-		if(data) {
-			$('.chat-wrap').show();
-		}
-		else {
-			alert("err");
-		}
-	});
-
-	socket.on('get usernames', (data, callback) => {
-		
-		var html = '';
-		data.forEach( (user) => {
-			html += `<a href="" class="links" data-key=${user.userName}>
-						<div class="cards" >
-							<div class="names">
-								<h4>@ ${user.userName}</h4>
-								<p class="user-fullname">${user.fullName}</p>
-							</div>
-						</div>
-						</a>`
+	const userNameField = $('#userName');
+	const fullNameField = $('#fullName');
+	const pageVisits = $('#pageVisits');
+	alert(pageVisits.val());
+	if(pageVisits.val() == 0) {
+		socket.emit('new user', {userName :userNameField.val(), pageVisits : pageVisits.val()}, (data) => {
+			//alert(pageVisits.val());
+			console.log(data);
+			if(data.status)
+				pageVisits.val(data.pageVisits);
 		});
-		$(".chat-head").html(html);
-	});
 
-	$('.chat-name-wrap').on('click', 'links', (e) => {
-		e.preventDefault();
-		alert(this.data('key'));
-	})
-});
+		socket.on('get usernames', (data) => {
+				const onlineUsers = $('.online-users');
+				let html = '';
+				data.forEach( (user) => {
+					 html+= `<li>${user.userName}</li>`;
+				});
+				onlineUsers.html(html);
+		});
+	}
+//});

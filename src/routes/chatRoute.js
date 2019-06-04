@@ -22,8 +22,7 @@ router.post(chatRouteData.CHAT_HOME, checkAuth, (req, res, next) => {
 	const {userName, name}= req.body;
 	//Fetch List of online users
 	chatController.fetchOnlineUsers()
-				  .then( (results) => {
-				  	console.log(results);	
+				  .then( (results) => {	
 				  	res.render('chatHome',{results, userName, name});	  	
 				  }).catch( (err) => {
 				  	 res.send(err);	

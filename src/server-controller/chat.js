@@ -23,7 +23,7 @@ const fetchDetails = (user) => {
 
 module.exports = {
 	openRoom : (userData) => {
-		console.log("here in func")
+		
 			return new Promise( (resolve, reject) => {
 				console.log("reached", userData)
 					let userNames = [];
@@ -32,7 +32,7 @@ module.exports = {
 						userNames.push(userData[user]);
 					}
 					let onlinePromise = userNames.map( (user) => {
-						console.log("name", user)
+						
 						return chatUtils.checkLoggedIn({userName:user});
 					})
 					Promise.all(onlinePromise)
@@ -51,7 +51,7 @@ module.exports = {
 			});	
 	},
 	fetchOnlineUsers : () => {
-		console.log("In here");
+		
 		return new Promise( (resolve, reject) => {
 			UserUtils.fetchOnlineUsers()
 							 .then( (users) => {

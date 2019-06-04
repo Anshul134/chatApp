@@ -1,11 +1,85 @@
+$('.chat-head').hide();
+$('.messageDiv').hide();
 $(document).ready( () => {
+
 	const chatRedirectForm = $("#chatRedirectForm");
 	const token = $('#token');
-
+	
 	if(token.val().length) {
 		chatRedirectForm.submit();
-	} 
+	};
+const socket = io.connect('http://localhost:3000');
+	
+	
+	$('#loginForm').on('submit', (e) => {
+	e.preventDefault();
+	const mailOrName = $('#mailOrName').val();
+	const password = $('#loginPassword').val();
+	$('.overlay').show();
+	$.ajax({
+		url : 'http://localhost:3000/users/login',
+		method : 'POST',
+		data : {mailOrName, password},
+		success : (loginResults) => {
+			$('.login-head').hide();
+			console.log("loginResults",loginResults)
+			data = loginResults.loginResults;
+			
+			$('.overlay').hide();
+			$('#token').val(data.token);
+			sessionStorage.setItem('token', data.token);
+			$('#userNameHidden').val(data.userName);
+			$('#nameHidden').val(data.name);
+			$('#loginForm').hide();
+			$('#registerForm').hide();
+			$('.chat-head').show();
+			$('.messageDiv').show();
+			//neew user event
+			socket.emit('new user', {userName :$('#userNameHidden').val()}, (data) => {
+				
+					console.log(data);
+			});
+
+			socket.on('get usernames', (data) => {
+		
+				let html = '';
+				console.log("dat>>>>",data)
+				data.forEach( (user) => {
+					html+= `<div class='li-class'> <li>${user}</li></div>`
+				});
+				$('.online-users').html(html);
+			})
+		},
+		error : (err) => {
+			$('.overlay').hide();
+			console.log(err);
+		}
+	});
+
+	
+	$('.messageForm').on('submit', (e) => {
+		e.preventDefault();
+		const messageVal = $('#message').val();
+	const userName = $('#userNameHidden').val();
+		console.log(messageVal,userName);
+		socket.emit('new message', {messageVal, userName});
+		const message = $('#message').val('');
+	})
+
+	socket.on('send message', (data) => {
+			console.log(data);
+			const html = "<div class='message'><p><b>"+data.userName+"</b> : "+data.messageVal+"</p></div>";
+			$('.message-area').append(html)
+
+	
+	})
+
 });
+
+
+});
+
+
 
 const emailField = $('#email');
 	const userNameField = $('#userName');
@@ -67,5 +141,7 @@ const checkEmail = () => {
 				overlay.hide();
 				console.log(err);
 			},
-		})
+		});
 	}
+
+
