@@ -1,11 +1,6 @@
-$('.chat-head').hide();
+// $('.chat-head').hide();
 $('.messageDiv').hide();
-const emailField = $('#email');
-	const userNameField = $('#userName');
-	const emailError = $('.email-error');
-	const userNameError = $('.userName-error');
-	const registerBtn = $('#registerBtn');
-	const overlay = $('.overlay');
+
 
 $(document).ready( () => {
 	
@@ -19,50 +14,125 @@ const socket = io.connect('http://localhost:3000');
 	
 	
 	$('#loginForm').on('submit', (e) => {
-		alert("here")
-	e.preventDefault();
-	const mailOrName = $('#mailOrName').val();
-	const password = $('#loginPassword').val();
-	$('.overlay').show();
-	$.ajax({
-		url : 'http://localhost:3000/users/login',
-		method : 'POST',
-		data : {mailOrName, password},
-		success : (loginResults) => {
-			$('.login-head').hide();
-			console.log("loginResults",loginResults)
-			data = loginResults.loginResults;
-			
-			$('.overlay').hide();
-			$('#token').val(data.token);
-			sessionStorage.setItem('token', data.token);
-			$('#userNameHidden').val(data.userName);
-			$('#nameHidden').val(data.name);
-			$('#loginForm').hide();
-			$('#registerForm').hide();
-			$('.chat-head').show();
-			$('.messageDiv').show();
-			//neew user event
-			socket.emit('new user', {userName :$('#userNameHidden').val()}, (data) => {
-				
-					console.log(data);
-			});
-
-			socket.on('get usernames', (data) => {
 		
-				let html = '';
-				console.log("dat>>>>",data)
-				data.forEach( (user) => {
-					html+= `<div class='li-class'> <li>${user}</li></div>`
-				});
-				$('.online-users').html(html);
-			})
-		},
-		error : (err) => {
-			$('.overlay').hide();
-			console.log(err);
-		}
+			e.preventDefault();
+			let mailOrName = $('#mailOrName').val();
+			let password = $('#loginPassword').val();
+			$('.overlay').show();
+			$.ajax({
+				url : 'http://localhost:3000/users/login',
+				method : 'POST',
+				data : {mailOrName, password},
+				success : (loginResults) => {
+					$('.login-head').hide();
+					console.log("loginResults",loginResults)
+					data = loginResults.loginResults;
+					if(data.status===200) {
+						$('.overlay').hide();
+						$('.nav-tabs').hide();
+						$('#token').val(data.token);
+						sessionStorage.setItem('token', data.token);
+						$('#userNameHidden').val(data.userName);
+						$('#nameHidden').val(data.name);
+						$('#loginForm').hide();
+						$('#registerForm').hide();
+						$('.chat-head').show();
+						$('.messageDiv').show();
+						$(".online-users").show();
+						//neew user event
+						socket.emit('new user', {userName :$('#userNameHidden').val()}, (data) => {
+							
+								console.log(data);
+						});
+
+						socket.on('get usernames', (data) => {
+					
+							let html = '';
+							console.log("dat>>>>",data)
+							data.forEach( (user) => {
+								html+= `<div class='li-class'> <li><h4> <b>@</b> ${user}</li></div>`
+							});
+							$('.online-users').html(html);
+						})
+					}
+					else {
+						$('.overlay').hide();
+						$('.login-error').show();
+						$('.login-error').html(`<p>${data.message}</p>`)
+						return false;
+					}
+				},
+				error : (err) => {
+					$('.overlay').hide();
+					$('.login-error').show();
+					$('.login-error').html(`<p>${data.message}</p>`)
+					console.log(err);
+				}
 	});
+});
+
+
+	$('#registerForm').on('submit', (e) => {
+			e.preventDefault();
+			alert("here");
+			let email = $('#email').val();
+			let password = $('#password').val();
+			let fName = $('#fName').val();
+			let lName = $('#lName').val();
+			let userName = $('#userName').val();
+			$('.overlay').show();
+			$.ajax({
+				url : 'http://localhost:3000/users/register',
+				method : 'POST',
+				data : {email, userName, password, fName, lName},
+				success : (results) => {
+					$('.login-head').hide();
+					console.log("results",results)
+					data = results.results;
+					if(data.status===200) {
+						$('.overlay').hide();
+						$('.nav-tabs').hide();
+						$('#token').val(data.token);
+						sessionStorage.setItem('token', data.token);
+						$('#userNameHidden').val(data.userName);
+						$('#nameHidden').val(data.name);
+						$('#loginForm').hide();
+						$('#registerForm').hide();
+						$('.chat-head').show();
+						$('.messageDiv').show();
+						$(".online-users").show();
+						//neew user event
+						socket.emit('new user', {userName :$('#userNameHidden').val()}, (data) => {
+							
+								console.log(data);
+						});
+
+						socket.on('get usernames', (data) => {
+					
+							let html = '';
+							console.log("dat>>>>",data)
+							data.forEach( (user) => {
+								html+= `<div class='li-class'> <li><h4> <b>@</b> ${user}</li></div>`
+							});
+							$('.online-users').html(html);
+						})
+					}
+					else {
+						$('.overlay').hide();
+						$('.login-error').show();
+						$('.login-error').html(`<p>${data.message}</p>`)
+						return false;
+					}
+				},
+				error : (err) => {
+					$('.overlay').hide();
+					$('.login-error').show();
+					$('.login-error').html(`<p>${data.message}</p>`)
+					console.log(err);
+					return false;
+				}
+	})
+});
 
 	
 	$('.messageForm').on('submit', (e) => {
@@ -76,7 +146,14 @@ const socket = io.connect('http://localhost:3000');
 
 	socket.on('send message', (data) => {
 			console.log(data);
-			const html = "<div class='message'><p><b>"+data.userName+"</b> : "+data.messageVal+"</p></div>";
+			let className="";
+			if(data.userName === $('#userNameHidden').val() ){
+				className = "class-right";
+			} else {
+				className = "class-left"
+			}
+
+			const html = `<div class='message col-md-12'><p class='${className}'><b> ${data.userName} </b> : ${data.messageVal}</p></div><br>`;
 			$('.message-area').append(html)
 
 	
@@ -85,64 +162,72 @@ const socket = io.connect('http://localhost:3000');
 });
 
 
-});
 
 
+const emailField = $('#email');
+	const userNameField = $('#userName');
+	const emailError = $('.email-error');
+	const userNameError = $('.userName-error');
+	const registerBtn = $('#registerBtn');
+	const overlay = $('.overlay');
+	
 
 
 
 const checkEmail = () => {
 		
-		let email = emailField.val();
+		let email = $('#email').val();
+		
 		if(email.length <= 2)
 			return;
-		overlay.show();
+		$('.overlay').show();
 		$.ajax({
 			'url' : 'http://localhost:3000/users/checkMail',
 			'data' : {email},
 			'method' : 'POST',
 			'success' : (data) => {
 				console.log("data",data)
-				overlay.hide();
+				$('.overlay').hide();
 				if(data.userExist === false) {
-					emailError.html('<p class="text-success email-res">Email available! Good to go.</p>');
-					registerBtn.attr('disabled', false);
+					$('.email-error').html('<p class="text-success email-res">Email available! Good to go.</p>');
+					$('#registerBtn').attr('disabled', false);
 
 				} else {
-					emailError.html('<p class="text-danger email-res">Email already taken. Please try another one.</p>');
-					registerBtn.attr('disabled', true);
+					$('.email-error').html('<p class="text-danger email-res">Email already taken. Please try another one.</p>');
+					$('#registerBtn').attr('disabled', true);
 				}
 			},
 			'error' : (err) => {
-				overlay.hide();
+				$('.overlay').hide();
 				console.log(err);
 			},
 		})
 	};
 
 	const checkUserName = () => {
-		let userName = userNameField.val();
+		let userName = $('#userName').val();
 		if(userName.length <= 2)
 			return;
-		overlay.show();
+		$('.overlay').show();
 		$.ajax({
 			'url' : 'http://localhost:3000/users/checkName',
 			'data' : {userName},
 			'method' : 'POST',
 			'success' : (data) => {
 				console.log("data",data)
-				overlay.hide();
+				$('.overlay').hide();
 				if(data.userExist === false) {
-					userNameError.html('<p class="text-success email-res">User name available! Good to go.</p>');
-					registerBtn.attr('disabled', false);
+					$('.userName-error').html('<p class="text-success email-res">User name available! Good to go.</p>');
+					$('#registerBtn').attr('disabled', false);
 
 				} else {
-					userNameError.html('<p class="text-danger email-res">User name already taken. Please try another one.</p>');
-					registerBtn.attr('disabled', true);
+					$('.userName-error').html('<p class="text-danger email-res">User name already taken. Please try another one.</p>');
+					$('#registerBtn').attr('disabled', true);
+
 				}
 			},
 			'error' : (err) => {
-				overlay.hide();
+				$('.overlay').hide();
 				console.log(err);
 			},
 		});

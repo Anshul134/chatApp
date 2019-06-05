@@ -128,11 +128,12 @@ const users = {
 												 			
 												 		}
 												 		
-												 }).catch( (err) => { 		//catch block for .then #6
+												 }).catch( (err) => {
+												 		console.log("err in#6",err) 		//catch block for .then #6
 												 		reject({status:500, message: MESSAGES.SOMETHING_WRONG});
 												 })
 					  }).catch( (err) => {		//catch block for .then #5
-					  	console.log(err);
+					  	console.log("err in#5",err);
 					  	reject({status:500, message: MESSAGES.SOMETHING_WRONG});
 					  })
 			

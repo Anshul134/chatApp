@@ -3,11 +3,12 @@
 <div class="container">
 	<div class="row">
 		<div class="col-md-12">
+			<div class="overlay"></div>
 			<h2 class="page-head text-center">Chat App</h2>
 				
-			<div class="chat-head" style="display: none">
-				<div class="online-users col-md-4">
-					<h3>Online Users</h3>
+			<div class="chat-head col-md-12" style="display: none">
+				<div class="online-users-wrap col-md-3">
+					<h3 class="text-center">Online Users</h3>
 					<ul class="online-users"></ul>
 				</div>
 				<div class="chat-form col-md-8">
@@ -16,9 +17,9 @@
 							
 						</div>
 						<div class="messageDiv" style="display: none">
-							<form class="messageForm">
-								<input type="text" name="message" id="message"/>
-								<input type="submit" name="submit" value="Send">
+							<form class="messageForm form">
+								<input type="text" name="message" placeholder="Type your message" class="form-group" id="message"/>
+								<input type="submit" class="btn btn-primary form-group" name="submit" value="Send">
 							</form>
 						</div>	
 					</div>
@@ -34,15 +35,16 @@
 			    <div id="home" class="tab-pane fade in active text-center">
 					<form class="form-horizontal" method="POST"  id="loginForm">
 				        <br><br><br><br>
-				        {{#if loginResults.message}}
-				            <div class="login-error alert alert-danger text-center">{{loginResults.message}}</div>
-				        {{/if}}
+				        
+				            <div class="login-error alert alert-danger text-center" style="display: none;"></div>
+				        
 				    <div class="form-group">
 				      <label class="control-label col-sm-2" for="email">Username or Email:</label>
 				      <div class="col-sm-10">
 				        <input type="text" class="form-control" id="mailOrName" placeholder="Enter Username or Email" name="mailOrName">
 				      </div>
 				    </div>
+
 				    <div class="form-group">
 				      <label class="control-label col-sm-2" for="pwd">Password:</label>
 				      <div class="col-sm-10">          
@@ -60,23 +62,27 @@
 			    </div>
 			    <div id="menu1" class="tab-pane fade">
 			    	<br><br><br><br>
-			      	<form class="form-horizontal" method="POST"  id="registerForm">
+			      	<form class="form-horizontal" method="POST" id="registerForm">
         <br>
-        {{#if results.message}}
-            <div class="login-error alert alert-danger text-center">{{results.message}}</div>
-          {{/if}}
+        
+            <div class="register-error alert alert-danger text-center" style="display: none"></div>
+          
     <div class="form-group">
       <label class="control-label col-sm-2" for="email">Email:</label>
       <div class="col-sm-10">
         <input type="email" class="form-control" id="email" placeholder="Enter Email" name="email" onBlur="checkEmail()">
       </div>
+      <div class="email-error"></div>
     </div>
+    
     <div class="form-group">
       <label class="control-label col-sm-2" for="email">User Name:</label>
       <div class="col-sm-10">
         <input type="text" class="form-control" id="userName" placeholder="Enter User Name" name="userName" onBlur="checkUserName()">
       </div>
+      <div class="userName-error"></div>
     </div>
+
     <div class="form-group">
       <label class="control-label col-sm-2" for="email">First Name:</label>
       <div class="col-sm-10">
@@ -98,7 +104,7 @@
     
     <div class="form-group">        
       <div class="col-sm-offset-2 col-sm-10">
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-primary" id="registerBtn" disabled="true">Submit</button>
       </div>
     </div>
   </form>	

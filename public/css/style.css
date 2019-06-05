@@ -104,11 +104,62 @@ span.psw {
     box-shadow: 2px 2px 2px 2px #888888;
 }
 
-.chat-head {
+/*.online-users {
   padding-top: 5%;
   text-decoration: underline;
   margin-top: 0;
+  background: #333;
+  color:white;
+  height: 330px;
+}*/
+
+.li-class {
+      background: #ababab;
+    color: white;
+    box-shadow: 2px 2px 2px #2d2c2c;
+    padding: 5%;
+    margin-bottom: 8%;
+    text-align: center;
 }
+.message-area {
+  height: 300px;
+}
+
+.chat-form {
+      border-left: 1px solid;
+    margin-left: 15px;
+}
+
+.chat-form-wrap {
+  background: #fdfdfd;
+
+}
+
+.message p{
+    padding: 4%;
+  background: #eee;
+  margin-bottom: 2%;
+  box-shadow: 2px 2px 2px 2px #867b67;
+  margin-right: 2%;
+  width: 49%;
+}
+
+.class-right {
+  float: right;
+}
+.class-left {
+  float:left;
+}
+
+.message-area {
+  height: 300px;
+    overflow-y: scroll;
+}
+
+.messageDiv {
+  margin-top: 5%;
+}
+
 
 .user-fullname {
   text-decoration: none;
@@ -119,5 +170,14 @@ span.psw {
   margin-bottom: 30px !important;
 }
 
+.email-error p{
+  margin-top:4%;
+  margin-left: 17%;
+  font-size: 16px
+}
 
-
+.userName-error p{
+  margin-top:4%;
+  margin-left: 17%;
+  font-size: 16px
+}

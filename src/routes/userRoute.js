@@ -88,17 +88,19 @@ router.post(userRouteData.UNIQUE_NAME, (req, res) => {
 */
 router.post(userRouteData.REGISTER, (req, res) => {
 	const {email, password, userName, fName, lName} = req.body;
+	console.log("in register", req.body);
 	userController.userRegister({email, password, userName, fName, lName})
 								.then( (results) => {
 									
 									if(results.status === 200) {
-										res.render('index',{results});
+										res.send({results});
 									}
 									else {
-										res.render('index', {results});
+										res.send({results});
 									}
 								}).catch( (err) => {
-									res.render('index', {err});
+									console.log("err>>>>",err);
+									res.send({err});
 								})
 
 });
