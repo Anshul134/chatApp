@@ -29,83 +29,79 @@
 			    <li style="width: 50%"><a data-toggle="tab" href="#menu1">Register</a></li>
 			    
 			</ul>
-			<div class="tab-content">
+			<div class="tab-content">	
+				<br>
 			    <div id="home" class="tab-pane fade in active text-center">
-
-			      	<form  class="col-md-offset-3 col-md-7 form" id="loginForm">
-			  			<br>
-			  {{#if loginResults.message}}
-						<div class="login-error alert alert-danger text-center">{{loginResults.message}}</div>
-				{{/if}}
-			  <div class="form-group">
-			    <label for="uname"><b>Username or Email</b></label>
-			    <input type="text" placeholder="Enter Username or Email" name="mailOrName" required id='mailOrName' class="form-control">
-			  </div>
-			  <div class="form-group">  
-			    <label for="psw"><b>Password</b></label>
-			    <input type="password" placeholder="Enter Password" name="password" required id='loginPassword' class="form-control">
-			  </div>
-			  <div class="form-group">
-			    <button type="submit" class="form-control">Login</button>
-			  </div>  
-			 
-
-			  
-			</form>
+					<form class="form-horizontal" method="POST"  id="loginForm">
+				        <br><br><br><br>
+				        {{#if loginResults.message}}
+				            <div class="login-error alert alert-danger text-center">{{loginResults.message}}</div>
+				        {{/if}}
+				    <div class="form-group">
+				      <label class="control-label col-sm-2" for="email">Username or Email:</label>
+				      <div class="col-sm-10">
+				        <input type="text" class="form-control" id="mailOrName" placeholder="Enter Username or Email" name="mailOrName">
+				      </div>
+				    </div>
+				    <div class="form-group">
+				      <label class="control-label col-sm-2" for="pwd">Password:</label>
+				      <div class="col-sm-10">          
+				        <input type="password" class="form-control" id="loginPassword" placeholder="Enter password" name="password">
+				      </div>
+				    </div>
+				    
+				    <div class="form-group">        
+				      <div class="col-sm-offset-2 col-sm-10">
+				        <button type="submit" class="btn btn-primary">Submit</button>
+				      </div>
+				    </div>
+				  </form>    	
+							
 			    </div>
 			    <div id="menu1" class="tab-pane fade">
-			      	<form action="/users/register" method="POST" class="form col-md-offset-2 col-md-5" id="registerForm">
-
-				  <div class="imgcontainer">
-				    <img src="/assets/img/img_avatar2.png" alt="Avatar" class="avatar">
-				  </div>
-				  {{#if results.message}}
-						<div class="login-error alert alert-danger text-center">{{results.message}}</div>
-					{{/if}}
-				  <div class="">
-				  	<div class="form-group">
-					    <label for="uname"><b>Email</b></label>
-					    <input type="email" class="form-control" placeholder="EnterEmail" name="email" required id="email" onBlur="checkEmail()">
-					  </div>  
-
-					  <div class="email-error">
-					  	
-					  </div>
-
-					  <div class="form-group">
-					    <label for="uname"><b>User Name</b></label>
-					    <input type="text" class="form-control" placeholder="Enter Username" name="userName" id="userName" required onBlur="checkUserName()">
-					  </div> 
-					  <div class="userName-error">
-					  	
-					  </div>
-	 
-
-					  <div class="form-group">
-					    <label for="uname"><b>First Name</b></label>
-					    <input type="text" class="form-control" placeholder="Enter First Name" name="fName" required>
-					  </div>  
-
-					  <div class="form-group">
-					    <label for="uname"><b>Last Name</b></label>
-					    <input type="text" class="form-control" placeholder="Enter Last Name" name="lName" required>
-					  </div>  
-
-					  <div class="form-group">
-					    <label for="psw"><b>Password</b></label>
-					    <input type="password" class="form-control" placeholder="Enter Password" name="password" id="password" required>
-					  </div>
-
-					  <div class="form-group">
-					    <label for="psw"><b>Confirm Password</b></label>
-					    <input type="password" class="form-control" placeholder="Re-enter Password" id="rePassword" name="confPassword" required>
-					  </div>
-
-					  <div class="form-group">
-				    	<button type="submit" class="form-control btn-primary" id="registerBtn" disabled>Register</button>
-				    </div> 
-				  </div>
-				</form>	
+			    	<br><br><br><br>
+			      	<form class="form-horizontal" method="POST"  id="registerForm">
+        <br>
+        {{#if results.message}}
+            <div class="login-error alert alert-danger text-center">{{results.message}}</div>
+          {{/if}}
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="email">Email:</label>
+      <div class="col-sm-10">
+        <input type="email" class="form-control" id="email" placeholder="Enter Email" name="email" onBlur="checkEmail()">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="email">User Name:</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" id="userName" placeholder="Enter User Name" name="userName" onBlur="checkUserName()">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="email">First Name:</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" id="fName" placeholder="Enter First Name" name="fName">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="email">Last Name:</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" id="lName" placeholder="Enter Last Nane" name="lName">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="pwd">Password:</label>
+      <div class="col-sm-10">          
+        <input type="password" class="form-control" id="password" placeholder="Enter password" name="password">
+      </div>
+    </div>
+    
+    <div class="form-group">        
+      <div class="col-sm-offset-2 col-sm-10">
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </div>
+    </div>
+  </form>	
 			    </div>
     		</div>
 			

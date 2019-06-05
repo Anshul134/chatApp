@@ -1,7 +1,14 @@
 $('.chat-head').hide();
 $('.messageDiv').hide();
-$(document).ready( () => {
+const emailField = $('#email');
+	const userNameField = $('#userName');
+	const emailError = $('.email-error');
+	const userNameError = $('.userName-error');
+	const registerBtn = $('#registerBtn');
+	const overlay = $('.overlay');
 
+$(document).ready( () => {
+	
 	const chatRedirectForm = $("#chatRedirectForm");
 	const token = $('#token');
 	
@@ -12,6 +19,7 @@ const socket = io.connect('http://localhost:3000');
 	
 	
 	$('#loginForm').on('submit', (e) => {
+		alert("here")
 	e.preventDefault();
 	const mailOrName = $('#mailOrName').val();
 	const password = $('#loginPassword').val();
@@ -81,14 +89,10 @@ const socket = io.connect('http://localhost:3000');
 
 
 
-const emailField = $('#email');
-	const userNameField = $('#userName');
-	const emailError = $('.email-error');
-	const userNameError = $('.userName-error');
-	const registerBtn = $('#registerBtn');
-	const overlay = $('.overlay');
+
 
 const checkEmail = () => {
+		
 		let email = emailField.val();
 		if(email.length <= 2)
 			return;
