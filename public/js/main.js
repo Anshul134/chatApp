@@ -184,7 +184,7 @@ const socket = io.connect('http://localhost:3000');
 					$(".emotionSuggest").val(emoticon);}
 			}	
 		if(data.emoticon) {
-			html = `<div class='message col-md-12'><p class='${className}'><b><span class='message-username col-md-12'> ${data.userName} : </span></b> <span class="col-md-12"> ${data.emoticon}<span></p></div><br>`;
+			html = `<div class='message col-md-12'><p class='${className}'><b><span class='message-username col-md-12'> ${data.userName} : </span></b> <span class="col-md-12 message-emoticon"> ${data.emoticon}<span></p></div><br>`;
 			$('.message-area').append(html);
 		}
 
