@@ -139,7 +139,11 @@ const socket = io.connect('http://localhost:3000');
 		e.preventDefault();
 		
 		const messageVal = $('#message').val();
-	const userName = $('#userNameHidden').val();
+		const userName = $('#userNameHidden').val();
+		if($('#message').val().length === 0) {
+				alert("Message cannot be empty");
+				return;
+		}
 		console.log("herhe message",messageVal,userName);
 		socket.emit('new message', {messageVal, userName});
 		$('#message').val('');
@@ -149,9 +153,14 @@ const socket = io.connect('http://localhost:3000');
 		e.preventDefault();
 		let emoticon = $('#emotionSuggest').val();
 		let userName = $('#userNameHidden').val();
+		if($('#emotionSuggest').val().length === 0) {
+				alert("Message cannot be empty");
+				return;
+			}
 		console.log("emotivon>>>", userName, emoticon)
 		socket.emit('new message', {userName, emoticon});
 		$('#emotionSuggest').val('');
+		$('#emoticonForm').hide("300");
 	});
 
 	socket.on('send message', (data) => {
@@ -169,7 +178,7 @@ const socket = io.connect('http://localhost:3000');
 			$('.message-area').append(html);
 		}
 		if(data.sentiScore!=null || data.sentiScore!=undefined) {
-				
+				$('#emoticonForm').show("300");
 				
 				if(data.sentiScore >0){
 					emoticon = ":)";
@@ -186,6 +195,7 @@ const socket = io.connect('http://localhost:3000');
 		if(data.emoticon) {
 			html = `<div class='message col-md-12'><p class='${className}'><b><span class='message-username col-md-12'> ${data.userName} : </span></b> <span class="col-md-12 message-emoticon"> ${data.emoticon}<span></p></div><br>`;
 			$('.message-area').append(html);
+
 		}
 
 
