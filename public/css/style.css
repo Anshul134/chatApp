@@ -6,7 +6,6 @@ body{
 /*form {border: 3px solid #f1f1f1;}*/
 
 input[type=text], input[type=password] {
-  width: 100%;
   padding: 12px 20px;
   margin: 8px 0;
   display: inline-block;
@@ -180,4 +179,15 @@ span.psw {
   margin-top:4%;
   margin-left: 17%;
   font-size: 16px
+}
+
+.emotionSuggest {
+  margin-right: 5% !important;
+}
+.emoticon-send {
+  margin-top:3%;
+}
+
+.message-username {
+  color:#e64e14;
 }

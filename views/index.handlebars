@@ -17,9 +17,16 @@
 							
 						</div>
 						<div class="messageDiv" style="display: none">
-							<form class="messageForm form">
-								<input type="text" name="message" placeholder="Type your message" class="form-group" id="message"/>
-								<input type="submit" class="btn btn-primary form-group" name="submit" value="Send">
+							
+								<div class="suggestions col-md-12">
+									<form id="emoticonForm">
+										<input type="text" name="emotionSuggest" id="emotionSuggest" class="emotionSuggest  col-md-8" />
+										<input type="submit" value="send suggested emoticon" class="btn btn-primary col-md-3 emoticon-send">
+									</form> 	
+								</div>	
+								<form class="messageForm form">
+									<input type="text" name="message" placeholder="Type your message" class="form-control" id="message"/>
+									<input type="submit" class="btn btn-primary form-group" name="submit" value="Send">
 							</form>
 						</div>	
 					</div>

@@ -74,7 +74,7 @@ const socket = io.connect('http://localhost:3000');
 
 	$('#registerForm').on('submit', (e) => {
 			e.preventDefault();
-			alert("here");
+			
 			let email = $('#email').val();
 			let password = $('#password').val();
 			let fName = $('#fName').val();
@@ -137,24 +137,60 @@ const socket = io.connect('http://localhost:3000');
 	
 	$('.messageForm').on('submit', (e) => {
 		e.preventDefault();
+		
 		const messageVal = $('#message').val();
 	const userName = $('#userNameHidden').val();
-		console.log(messageVal,userName);
+		console.log("herhe message",messageVal,userName);
 		socket.emit('new message', {messageVal, userName});
-		const message = $('#message').val('');
-	})
+		$('#message').val('');
+	});
+
+	$('#emoticonForm').on('submit', (e) => {
+		e.preventDefault();
+		let emoticon = $('#emotionSuggest').val();
+		let userName = $('#userNameHidden').val();
+		console.log("emotivon>>>", userName, emoticon)
+		socket.emit('new message', {userName, emoticon});
+		$('#emotionSuggest').val('');
+	});
 
 	socket.on('send message', (data) => {
 			console.log(data);
 			let className="";
+			let emoticon = "";
 			if(data.userName === $('#userNameHidden').val() ){
 				className = "class-right";
 			} else {
 				className = "class-left"
 			}
 
-			const html = `<div class='message col-md-12'><p class='${className}'><b> ${data.userName} </b> : ${data.messageVal}</p></div><br>`;
-			$('.message-area').append(html)
+			if(data.messageVal) {
+			const html = `<div class='message col-md-12'><p class='${className}'><b><span class='message-username col-md-12'> ${data.userName} : </span></b> <span class="col-md-12">  ${data.messageVal}</span></p></div><br>`;
+			$('.message-area').append(html);
+		}
+		if(data.sentiScore!=null || data.sentiScore!=undefined) {
+				
+				
+				if(data.sentiScore >0){
+					emoticon = ":)";
+					$(".emotionSuggest").val(emoticon);
+				}
+				else if(data.sentiScore<0) {
+						emoticon = ":(";
+						$(".emotionSuggest").val(emoticon);
+				}
+				else {
+					emoticon = ":|";
+					$(".emotionSuggest").val(emoticon);}
+			}	
+		if(data.emoticon) {
+			html = `<div class='message col-md-12'><p class='${className}'><b><span class='message-username col-md-12'> ${data.userName} : </span></b> <span class="col-md-12"> ${data.emoticon}<span></p></div><br>`;
+			$('.message-area').append(html);
+		}
+
+
+					
+			
 
 	
 	})

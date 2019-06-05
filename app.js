@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 
 const hbs = require('express-handlebars');
-
+var NaturalLanguageUnderstandingV1 = require('ibm-watson/natural-language-understanding/v1.js');
 const path = require('path');
 var server=require('http').createServer(app);
 const io = require('socket.io').listen(server);
@@ -39,6 +39,13 @@ app.use('/', appRoutes);
 
 server.listen(PORT, () => {
 	console.log(`Listening to ${PORT}`);
+});
+
+
+const nlu = new NaturalLanguageUnderstandingV1({
+  version: '2018-11-16',
+  iam_apikey: 'P-Sg8qAoDjaZsYZHt496GQ18UXJqiMogj05krArh-srK',
+  url: 'https://gateway-lon.watsonplatform.net/natural-language-understanding/api/v1/analyze?version=2018-11-16'
 });
 
 let users = [];
@@ -81,7 +88,33 @@ io.sockets.on('connection', (socket) => {
 
 	socket.on('new message', (data) => {
 		console.log("DATA::::",data);
-		io.sockets.emit('send message', data);
+		if(data.emoticon) {
+			io.sockets.emit('send message', data);
+		}
+		if(data.messageVal) {
+			let options= {
+				'text' : data.messageVal,
+				features : {
+					concepts: {},
+	        keywords: {},
+	        sentiment : {}
+				}
+			};
+			nlu.analyze(options, function(err, res) {
+	      if (err) {
+	        console.log(err);
+	        return;
+	      }
+	      let emotion = res.sentiment.document.score;
+	      data.sentiScore = emotion;
+	      delete data.messageVal;
+	      io.sockets.emit('send message', data);
+	      console.log("senti>>>>",res);
+	    });
+			
+			io.sockets.emit('send message', data);
+		}
+
 	});
 
 
