@@ -207,3 +207,13 @@ span.psw {
 .emotionSuggest {
   box-shadow: 1px 1px 2px 2px wheat;
 }
+
+.gif-suggest {
+  cursor: pointer;
+}
+
+.gif-suggestion {
+  box-shadow: 1px 1px 2px 2px wheat;
+  padding: 2%;
+  margin-bottom: 2%;
+}

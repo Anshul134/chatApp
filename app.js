@@ -117,6 +117,12 @@ io.sockets.on('connection', (socket) => {
 
 	});
 
+	socket.on('new img message', (data) => {
+		if(data.imgSrc) {
+			io.sockets.emit('new img message', data);
+		}
+	})
+
 
 
 });

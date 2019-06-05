@@ -163,6 +163,38 @@ const socket = io.connect('http://localhost:3000');
 		$('#emoticonForm').hide("300");
 	});
 
+	$('.gif-suggest').on('click', (e) => {
+		e.preventDefault();
+		let imgSrc = e.target.src;
+		let userName = $('#userNameHidden').val();
+		if(imgSrc.length) {
+			socket.emit('new img message', {userName, imgSrc});
+		}
+		else {
+			return;
+		}
+	});
+
+	socket.on('new img message', (data) => {
+		if(data.userName === $('#userNameHidden').val() ){
+				className = "class-right";
+			} else {
+				className = "class-left"
+			}
+			if(data.imgSrc) {
+			html = `<div class='message col-md-12'>
+								<p class='${className}'>
+									<b><span class='message-username col-md-12'> 
+											${data.userName} : 
+									</span></b> 
+									<span class="col-md-12"> 
+										<img src=${data.imgSrc} class="message-gif img" height='120' width='140'
+									<span></p></div><br>`;
+			$('.message-area').append(html);
+			$('.gif-suggestion').hide("300");
+		}
+	})
+
 	socket.on('send message', (data) => {
 			console.log(data);
 			let className="";
@@ -179,30 +211,36 @@ const socket = io.connect('http://localhost:3000');
 		}
 		if(data.sentiScore!=null || data.sentiScore!=undefined) {
 				$('#emoticonForm').show("300");
-				
+				$('.gif-suggestion').show();
+
 				if(data.sentiScore >0){
 					emoticon = ":)";
 					$(".emotionSuggest").val(emoticon);
+					$('#img1').attr('src', '/assets/img/happy.gif');
+					$('#img2').attr('src', '/assets/img/happy2.gif');
+					$('#img3').attr('src', '/assets/img/happy3.gif');
 				}
 				else if(data.sentiScore<0) {
 						emoticon = ":(";
 						$(".emotionSuggest").val(emoticon);
+						$('#img1').attr('src', '/assets/img/sad.gif');
+						$('#img2').attr('src', '/assets/img/sad2.gif');
+						$('#img3').attr('src', '/assets/img/sad3.gif');
+
 				}
 				else {
 					emoticon = ":|";
-					$(".emotionSuggest").val(emoticon);}
+					$('.emotionSuggest').val(emoticon);
+					$('#img1').attr('src', '/assets/img/neutral.gif');
+					$('#img2').attr('src', '/assets/img/nuetral2.gif');;
+					$('#img3').attr('src', '/assets/img/nuetral3.gif');;
+				}
 			}	
 		if(data.emoticon) {
 			html = `<div class='message col-md-12'><p class='${className}'><b><span class='message-username col-md-12'> ${data.userName} : </span></b> <span class="col-md-12 message-emoticon"> ${data.emoticon}<span></p></div><br>`;
 			$('.message-area').append(html);
 
-		}
-
-
-					
-			
-
-	
+		}	
 	})
 
 });
