@@ -4,7 +4,7 @@ const app = express();
 const hbs = require('express-handlebars');
 var NaturalLanguageUnderstandingV1 = require('ibm-watson/natural-language-understanding/v1.js');
 const path = require('path');
-var server=require('http').createServer(app);
+//var server=require('http').createServer(app);
 const io = require('socket.io').listen(server);
 
 //USING .env file for enviroment variables
@@ -37,11 +37,11 @@ app.use('/users', userRoute);
 app.use('/chats', chatRoute);
 app.use('/', appRoutes);
 
-server.listen(PORT, () => {
+const server = app.listen(PORT, () => {
 	console.log(`Listening to ${PORT}`);
 });
 
-
+const io = require('socket.io').listen(server);
 
 
 var users = [];
