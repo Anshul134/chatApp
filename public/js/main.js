@@ -1,7 +1,7 @@
 // $('.chat-head').hide();
 $('.messageDiv').hide();
 var socket='';
-socket = io.connect('http://localhost:3000');
+socket = io.connect('https://chatapp-anshul.herokuapp.com');
 
 
 $(document).ready( () => {
