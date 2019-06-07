@@ -42,11 +42,7 @@ server.listen(PORT, () => {
 });
 
 
-const nlu = new NaturalLanguageUnderstandingV1({
-  version: '2018-11-16',
-  iam_apikey: 'P-Sg8qAoDjaZsYZHt496GQ18UXJqiMogj05krArh-srK',
-  url: 'https://gateway-lon.watsonplatform.net/natural-language-understanding/api/v1/analyze?version=2018-11-16'
-});
+
 
 var users = [];
 var connections = [];
