@@ -48,8 +48,8 @@ const nlu = new NaturalLanguageUnderstandingV1({
   url: 'https://gateway-lon.watsonplatform.net/natural-language-understanding/api/v1/analyze?version=2018-11-16'
 });
 
-let users = [];
-let connections = [];
+var users = [];
+var connections = [];
 
 io.sockets.on('connection', (socket) => {
 	connections.push(socket);

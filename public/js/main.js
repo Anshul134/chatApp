@@ -1,5 +1,7 @@
 // $('.chat-head').hide();
 $('.messageDiv').hide();
+var socket='';
+socket = io.connect('http://localhost:3000');
 
 
 $(document).ready( () => {
@@ -10,7 +12,7 @@ $(document).ready( () => {
 	if(token.val().length) {
 		chatRedirectForm.submit();
 	};
-const socket = io.connect('http://localhost:3000');
+
 	
 	
 	$('#loginForm').on('submit', (e) => {
@@ -40,6 +42,7 @@ const socket = io.connect('http://localhost:3000');
 						$('.messageDiv').show();
 						$(".online-users").show();
 						//neew user event
+						 
 						socket.emit('new user', {userName :$('#userNameHidden').val()}, (data) => {
 							
 								console.log(data);
@@ -102,6 +105,7 @@ const socket = io.connect('http://localhost:3000');
 						$('.messageDiv').show();
 						$(".online-users").show();
 						//neew user event
+
 						socket.emit('new user', {userName :$('#userNameHidden').val()}, (data) => {
 							
 								console.log(data);
