@@ -22,7 +22,7 @@ $(document).ready( () => {
 			let password = $('#loginPassword').val();
 			$('.overlay').show();
 			$.ajax({
-				url : 'http://localhost:3000/users/login',
+				url : 'https://chatapp-anshul.herokuapp.com/users/login',
 				method : 'POST',
 				data : {mailOrName, password},
 				success : (loginResults) => {
@@ -85,7 +85,7 @@ $(document).ready( () => {
 			let userName = $('#userName').val();
 			$('.overlay').show();
 			$.ajax({
-				url : 'http://localhost:3000/users/register',
+				url : 'https://chatapp-anshul.herokuapp.com/users/register',
 				method : 'POST',
 				data : {email, userName, password, fName, lName},
 				success : (results) => {
@@ -270,7 +270,7 @@ const checkEmail = () => {
 			return;
 		$('.overlay').show();
 		$.ajax({
-			'url' : 'http://localhost:3000/users/checkMail',
+			'url' : 'https://chatapp-anshul.herokuapp.com/users/checkMail',
 			'data' : {email},
 			'method' : 'POST',
 			'success' : (data) => {
@@ -298,7 +298,7 @@ const checkEmail = () => {
 			return;
 		$('.overlay').show();
 		$.ajax({
-			'url' : 'http://localhost:3000/users/checkName',
+			'url' : 'https://chatapp-anshul.herokuapp.com/users/checkName',
 			'data' : {userName},
 			'method' : 'POST',
 			'success' : (data) => {
