@@ -4,8 +4,8 @@ const app = express();
 const hbs = require('express-handlebars');
 var NaturalLanguageUnderstandingV1 = require('ibm-watson/natural-language-understanding/v1.js');
 const path = require('path');
-
-
+const server = require('http').createServer(app);
+const io = require('socket.io').listen(server);
 //USING .env file for enviroment variables
 require('dotenv').config();
 
@@ -36,12 +36,17 @@ app.use('/users', userRoute);
 app.use('/chats', chatRoute);
 app.use('/', appRoutes);
 
-const server = app.listen(PORT, () => {
+server.listen(PORT, () => {
 	console.log(`Listening to ${PORT}`);
 });
 
-const io = require('socket.io').listen(server);
+// const io = require('socket.io').listen(server);
 
+const nlu = new NaturalLanguageUnderstandingV1({
+  version: '2018-11-16',
+  iam_apikey: 'P-Sg8qAoDjaZsYZHt496GQ18UXJqiMogj05krArh-srK',
+  url: 'https://gateway-lon.watsonplatform.net/natural-language-understanding/api/v1/analyze?version=2018-11-16'
+});
 
 var users = [];
 var connections = [];

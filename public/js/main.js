@@ -1,9 +1,9 @@
 // $('.chat-head').hide();
 $('.messageDiv').hide();
 var socket='';
-socket = io.connect('https://chatapp-anshul.herokuapp.com');
 
-
+const SITE_URL = "https://chatapp-anshul.herokuapp.com";
+socket = io.connect(`${SITE_URL}`);
 $(document).ready( () => {
 	
 	const chatRedirectForm = $("#chatRedirectForm");
@@ -22,7 +22,7 @@ $(document).ready( () => {
 			let password = $('#loginPassword').val();
 			$('.overlay').show();
 			$.ajax({
-				url : 'https://chatapp-anshul.herokuapp.com/users/login',
+				url : `${SITE_URL}/users/login`,
 				method : 'POST',
 				data : {mailOrName, password},
 				success : (loginResults) => {
@@ -85,7 +85,7 @@ $(document).ready( () => {
 			let userName = $('#userName').val();
 			$('.overlay').show();
 			$.ajax({
-				url : 'https://chatapp-anshul.herokuapp.com/users/register',
+				url : `${SITE_URL}/users/register`,
 				method : 'POST',
 				data : {email, userName, password, fName, lName},
 				success : (results) => {
@@ -270,7 +270,7 @@ const checkEmail = () => {
 			return;
 		$('.overlay').show();
 		$.ajax({
-			'url' : 'https://chatapp-anshul.herokuapp.com/users/checkMail',
+			'url' : `${SITE_URL}/users/checkMail`,
 			'data' : {email},
 			'method' : 'POST',
 			'success' : (data) => {
@@ -298,7 +298,7 @@ const checkEmail = () => {
 			return;
 		$('.overlay').show();
 		$.ajax({
-			'url' : 'https://chatapp-anshul.herokuapp.com/users/checkName',
+			'url' : `${SITE_URL}/users/checkName`,
 			'data' : {userName},
 			'method' : 'POST',
 			'success' : (data) => {
